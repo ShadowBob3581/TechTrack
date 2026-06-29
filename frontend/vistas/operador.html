@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Ventanilla (Operador) - TESCHA</title>
+    
+    <link class="theme-style" rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/componentes.css">
+    <link rel="stylesheet" href="../css/navbar_premium.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/operador.css">
+    <link rel="stylesheet" href="../css/salida.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content" id="app">
+            <div class="loading">Iniciando pasarela de datos de ventanilla...</div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/oper_main.js"></script>
+    <script src="../js/prestamos.js"></script>
+    <script src="../js/oper_dashboard.js"></script>
+    <script src="../js/oper_transito.js"></script>
+    <script src="../js/oper_salida.js"></script>
+    <script src="../js/oper_incidencias.js"></script>
+</body>
+</html>

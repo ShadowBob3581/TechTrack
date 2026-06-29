@@ -1,0 +1,56 @@
+<!-- =========================================================================
+     SUB-VISTA 4: REPORTE DE INCIDENCIAS E HISTORIAL SIMPLE (vista4_incidencias.html)
+     ========================================================================= -->
+
+<div class="incidencias-wrapper" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+    
+    <!-- COLUMNA IZQUIERDA: FORMULARIO DE REPORTE -->
+    <div class="card form-incidencia-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--border-radius-lg); padding: 24px; box-shadow: 0 4px 12px var(--shadow-main);">
+        <div style="margin-bottom: 20px;">
+            <h2 style="font-size: 18px; color: var(--text); font-weight: 600;">Reportar Falla / Desvío</h2>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">Retira el dispositivo del inventario activo y muévelo a mantenimiento técnico.</p>
+        </div>
+
+        <form id="form-registro-incidencia">
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="inc-numero-serie" style="display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500;">Número de Serie del Equipo <span style="color: var(--danger);">*</span></label>
+                <input type="text" id="inc-numero-serie" required placeholder="Ej. LAP-TESCHA-045" style="width: 100%; padding: 10px 12px; background: var(--surface-light); border: 1px solid var(--border); border-radius: var(--border-radius-md); color: var(--text); font-size: 13px; outline: none; text-transform: uppercase;">
+                <small style="display: block; font-size: 11px; color: var(--muted); margin-top: 4px;">Debe coincidir exactamente con la etiqueta física.</small>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="inc-descripcion-falla" style="display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500;">Descripción Detallada de la Falla Mecánica / Eléctrica <span style="color: var(--danger);">*</span></label>
+                <textarea id="inc-descripcion-falla" required placeholder="Escriba los síntomas detectados (Ej. 'El puerto USB-C principal tiene falso contacto' o 'Teclado derramado con líquido, teclas trabadas')." style="width: 100%; height: 120px; padding: 10px; background: var(--surface-light); border: 1px solid var(--border); border-radius: var(--border-radius-md); color: var(--text); font-size: 13px; resize: none; font-family: inherit; outline: none;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-danger" style="width: 100%; padding: 12px; background: var(--danger); color: #fff; font-weight: 600; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                ⚠️ Aislar y Desviar a Mantenimiento
+            </button>
+        </form>
+    </div>
+
+    <!-- COLUMNA DERECHA: LOG SIMPLIFICADO DE REPORTES RECIENTES -->
+    <div class="card history-incidencia-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--border-radius-lg); padding: 24px; display: flex; flex-direction: column;">
+        <div style="margin-bottom: 16px;">
+            <h3 style="font-size: 15px; color: var(--text); font-weight: 600;">Historial Reciente de Daños</h3>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 2px;">Últimos movimientos preventivos gestionados en ventanilla.</p>
+        </div>
+
+        <div style="flex: 1; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--border-radius-md); background: rgba(0,0,0,0.1);">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02);">
+                        <th style="padding: 10px; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase;">N° Serie</th>
+                        <th style="padding: 10px; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase;">Diagnóstico Inicial</th>
+                        <th style="padding: 10px; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; text-align: right;">Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-incidencias-body">
+                    <tr>
+                        <td colspan="3" style="padding: 24px; text-align: center; color: var(--muted);">Sincronizando bitácora...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

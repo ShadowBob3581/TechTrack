@@ -1,0 +1,95 @@
+├──Proyecto
+│    │
+│    ├── backend/
+│    │    │
+│    │    ├──controladores/
+│    │    │    │
+│    │    │    ├── activos_controller.py    #  
+│    │    │    ├── auditoria_controller.py  #
+│    │    │    ├── auth_controller.py       #
+│    │    │    ├── dashboard_controller.py  #
+│    │    │    ├── importacion_controller.py#
+│    │    │    └── prestamos_controller.py  #
+│    │    │
+│    │    ├──modelos/
+│    │    │    │
+│    │    │    ├── activo.py                #
+│    │    │    ├── auditoria.py             #
+│    │    │    ├── mantenimiento.py         #
+│    │    │    ├── prestamo.py              #
+│    │    │    └── usuario.py               #
+│    │    │    
+│    │    ├── venv/
+│    │    ├── app.py                        #
+│    │    ├── config.py                     #
+│    │    ├── Dockerfile                    #
+│    │    └── requirements.txt              #
+│    │
+│    ├── database/
+│    │    │
+│    │    └──schema_postgres.sql
+│    │
+│    ├── frontend/
+│    │    │
+│    │    ├── css/
+│    │    │    ├── variables.css        # Paleta de colores 
+│    │    │    ├── componentes.css      # Estilos globales: botones, tarjetas KPI, ventanas modales y alertas
+│    │    │    ├── navbar_premium.css   # Diseño de la barra de navegación lateral fija (Sidebar)
+│    │    │    ├── operador.css         #
+│    │    │    ├── salida.css           #
+│    │    │    ├── login.css            # Estilos de la pasarela de acceso
+│    │    │    ├── dashboard.css        # Interfaz de KPIs y contenedores de gráficos (Canvas/SVG)
+│    │    │    ├── activos.css          # Interfaz CRUD para el inventario 
+│    │    │    ├── prestamos.css        # Estilos del formulario de prestamo
+│    │    │    ├── usuarios.css         # Interfaz de la vista de usuarios para el admin
+│    │    │    ├── catalogo.css         # Catalogo de activos disponibles que esta por fuera del login
+│    │    │    ├── importar.css         #
+│    │    │    └── auditoria.css        # Diseño cronológico tipo "Caja Negra" con filtros compactos
+│    │    │
+│    │    ├── js/
+│    │    │    ├── auth.js              # Intercepta el Login/Registro, guarda sesión y redirige al rol correcto
+│    │    │    ├── admin_main.js        # Enrutador SPA de admin.html: intercepta hashes e inyecta sub-vistas
+│    │    │    ├── oper_main.js         # Sin contenido
+│    │    │    ├── dashboard.js         # Renderiza las gráficas (Admin)
+│    │    │    ├── activos.js           # Lógica del CRUD, modales de inserción y búsquedas
+│    │    │    ├── importar.js          #
+│    │    │    ├── oper_dashboard.js    #
+│    │    │    ├── oper_incidencia.js   #
+│    │    │    ├── oper_salida.js       #
+│    │    │    ├── oper_transito.js     #
+│    │    │    ├── prestamos.js         # 
+│    │    │    ├── mantenimiento.js     # Sin contenido
+│    │    │    ├── auditoria.js         # Carga los logs de seguridad y aplica filtros
+│    │    │    ├── usuarios.js          # Control de operadores: bandejas de aprobación [Aprobar]/[Rechazar]
+│    │    │    └── carrusel3d.js        # Script matemático/físico para controlar el carrusel orbital del catalogo fuera del login
+│    │    │
+│    │    ├── vistas/                  # Fragmentos HTML puros (inyectados dinámicamente por JS)
+│    │    │    │
+│    │    │    ├── admin/               # 🏢 Fragmentos exclusivos del Superpanel (admin.html)
+│    │    │    │    ├── vista1_dashboard.html   # KPIs + Gráficas (Dispositivos más solicitados y costos)
+│    │    │    │    ├── vista2_inventario.html  # Maestro CRUD, buscador por serie/categoría y modal alta
+│    │    │    │    ├── vista3_usuarios.html    # Bandeja de Entrada de aprobaciones y Lista Activa
+│    │    │    │    ├── vista4_auditoria.html   # Feed de logs ("Caja Negra") + Triggers PostgreSQL
+│    │    │    │    └── vista5_importar.html    #
+│    │    │    │
+│    │    │    ├── oper/                # 🏪 Fragmentos exclusivos de Ventanilla (operator.html)
+│    │    │    │    ├── vista1_dashboard.html    # Graficos de datos y disponibilidad de activos
+│    │    │    │    ├── vista2_transito.html     # Tabla de prestamos activos al momento
+│    │    │    │    ├── vista3_salida.html       # Formulario de registro de nuevo prestamo
+│    │    │    │    └── vista4_incidencias.html  # Formulario de reporte de activos en reparacion y lista de los que estan en reparacion
+│    │    │    │
+│    │    │    ├── index.html               # 🌐 Catalogo Público: Carrusel Orbital 3D + Barra de búsqueda de alumnos
+│    │    │    ├── login.html               # 🚪 Pasarela: Ventana modal de Login + Formulario de Registro inactivo
+│    │    │    ├── admin.html               # 🏢 Marco Maestro Admin: Posee el Sidebar fijo y el contenedor <main id="app">
+│    │    │    └── operator.html            # 🏪 Marco Maestro Operador: Posee el Sidebar fijo y el contenedor <main id="app">
+│    │    │
+│    │    └── Dockerfile
+│    │    
+│    ├── gateway
+│    │    │
+│    │    ├── Dockerfile
+│    │    └── nginx.conf
+│    │
+│    ├── docker_compose.yml
+│    ├── .env
+│    └── README.md

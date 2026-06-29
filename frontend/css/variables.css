@@ -1,0 +1,91 @@
+/* =========================================================================
+   1. IMPORTACIÓN DE FUENTES NUCLEARES (Google Fonts)
+   ========================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* =========================================================================
+   2. RESETEO UNIVERSAL Y CONFIGURACIÓN DE CAJA (Box Sizing)
+   ========================================================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================================================
+   3. CONFIGURACIÓN DEL DESIGN SYSTEM (Diseño por Variables)
+   ========================================================================= */
+:root, html[data-theme="dark"] {
+    /* Paleta Cyber-Tech (Fondo Oscuro por Defecto - Estilo Institucional TESCHA) */
+    --bg: #0f1117;
+    --surface: #181c27; 
+    --border: #262c3d;
+    --accent: #4f8ef7; 
+    --accent-dim: rgba(79, 142, 247, 0.08);
+    --text: #e8ecf4; 
+    --muted: #6b7694;
+    
+    /* Estados Alerta / Semánticos */
+    --danger: #f25f5c; 
+    --success: #43d98f; 
+    --warn: #f5a623;
+    --info: #22d3ee;
+    
+    /* Efectos, Sombras y Bordes */
+    --shadow-main: rgba(0, 0, 0, 0.5);
+    --shadow-glow: rgba(79, 142, 247, 0.15);
+    --border-radius-sm: 6px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 14px;
+    
+    /* Definición Tipográfica */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    
+    /* Transición Global de Temas */
+    --theme-transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html[data-theme="light"] {
+    /* Paleta Tech-Light (Modo Claro Adaptado) */
+    --bg: #f4f6fa; 
+    --surface: #ffffff; 
+    --border: #ced6e3;
+    --accent: #2575fc; 
+    --accent-dim: rgba(37, 117, 252, 0.08);
+    --text: #1e2530; 
+    --muted: #707e94;
+    
+    /* Estados Alerta adaptados para fondo claro */
+    --danger: #e14d4a;
+    --success: #2ca669;
+    --warn: #d98216;
+    --info: #0891b2;
+    
+    /* Efectos y Sombras */
+    --shadow-main: rgba(0, 0, 0, 0.06);
+    --shadow-glow: rgba(37, 117, 252, 0.05);
+}
+
+/* =========================================================================
+   4. ASIGNACIÓN ASOCIATIVA GLOBAL
+   ========================================================================= */
+html {
+    font-family: var(--font-main);
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--bg);
+    transition: var(--theme-transition);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: var(--theme-transition);
+}

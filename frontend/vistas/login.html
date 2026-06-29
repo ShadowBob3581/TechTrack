@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTrack - Acceso al Sistema</title>
+    
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/componentes.css">
+    <link rel="stylesheet" href="../css/login.css">
+    
+    <style>
+        /* Escenario de Fondo simulando el Kiosco difuminado para la experiencia inmersiva */
+        .login-page-bg {
+            background: radial-gradient(circle at center, #1b2030 0%, var(--bg) 70%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1200px;
+        }
+
+        /* Simulación estética del Kiosco de Alumnos que vive detrás del cristal */
+        .kiosco-backdrop-simulation {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transform: scale(0.85);
+            filter: blur(14px);
+            opacity: 0.4;
+            pointer-events: none;
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s, opacity 0.7s;
+        }
+
+        /* Cuando el login es correcto, el fondo simulado se enfoca antes de saltar al panel */
+        .kiosco-backdrop-simulation.enfocado {
+            transform: scale(1);
+            filter: blur(0px);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="login-page-bg">
+
+    <div class="kiosco-backdrop-simulation" id="bg-simulation">
+        <h1 style="font-family: var(--font-display); font-size: 40px; margin-bottom: 20px;">Biblioteca Digital de Hardware</h1>
+        <div style="width: 400px; height: 40px; background: var(--surface); border: 2px solid var(--border); border-radius: 12px;"></div>
+    </div>
+
+    <div class="login-overlay" id="login-overlay">
+        <div class="wrap" id="login-card">
+            
+            <div class="panel-left">
+                <div class="brand">
+                    <div class="brand-name">Tech<span>Track</span></div>
+                    <div class="brand-sub">Lab de Innovación</div>
+                </div>
+                <div class="panel-copy">
+                    <h2>Gestión Inteligente de Activos</h2>
+                    <p>Optimiza el control, préstamos y mantenimientos de infraestructura tecnológica en tiempo real.</p>
+                </div>
+                <div class="stats">
+                    <div>
+                        <div class="stat-n">TESCHA</div>
+                        <div class="stat-l">Sede Central</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel-right">
+                <div id="vista-login">
+                    <h3>¡Bienvenido!</h3>
+                    <div class="sub">Introduce tus credenciales para acceder al sistema</div>
+                    
+                    <form id="formLogin" onsubmit="manejadorLogin(event)">
+                        <div class="field">
+                            <label for="usuario">Usuario / Matrícula</label>
+                            <input type="text" id="usuario" placeholder="Ej. 2026-TESCHA" required autocomplete="username">
+                        </div>
+                        <div class="field">
+                            <label for="password">Contraseña</label>
+                            <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="btnLogin" style="width: 100%; height: 46px; margin-top: 8px;">
+                            <span>Iniciar Sesión</span>
+                        </button>
+                    </form>
+
+                    <div class="public-access" style="margin-top: 20px;">
+                        ¿No tienes una cuenta? <a href="#" onclick="conmutarVistasAuth(event, 'registro')">Regístrate Aquí</a>
+                    </div>
+                </div>
+
+                <div id="vista-registro" style="display: none;">
+                    <h3>Crear Cuenta</h3>
+                    <div class="sub">Regístrate para solicitar acceso como operador técnico</div>
+                    
+                    <form id="formRegistro" onsubmit="manejadorRegistro(event)">
+                        <div class="field">
+                            <label for="reg-nombre">Nombre Completo</label>
+                            <input type="text" id="reg-nombre" placeholder="Ej. Gerardo Silva" required autocomplete="name">
+                        </div>
+                        <div class="field">
+                            <label for="reg-usuario">Usuario / Matrícula / Correo</label>
+                            <input type="text" id="reg-usuario" placeholder="Ej. gsilva@tescha.edu.mx" required autocomplete="username">
+                        </div>
+                        <div class="field">
+                            <label for="reg-password">Contraseña</label>
+                            <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required autocomplete="new-password">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="btnRegistro" style="width: 100%; height: 46px; margin-top: 8px;">
+                            <span>Solicitar Registro</span>
+                        </button>
+                    </form>
+
+                    <div class="public-access" style="margin-top: 20px;">
+                        ¿Ya tienes cuenta? <a href="#" onclick="conmutarVistasAuth(event, 'login')">Inicia Sesión</a>
+                    </div>
+                </div>
+                
+                <div class="msg" id="msg"></div>
+                
+                <div class="public-access" style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
+                    ¿Eres alumno? <a href="index.html">Consulta Disponibilidad Aquí</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

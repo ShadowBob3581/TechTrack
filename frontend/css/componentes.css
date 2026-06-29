@@ -1,0 +1,413 @@
+/* =========================================================================
+   1. PERSONALIZACIÓN DEL SCROLLBAR GLOBAL
+   ========================================================================= */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--border-radius-sm);
+    border: 2px solid var(--bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* =========================================================================
+   2. CONTENEDORES ESTRUCTURALES DE SUB-VISTAS (SPA)
+   ========================================================================= */
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor principal donde se inyectan los fragmentos HTML */
+.main-content {
+    flex: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 64px auto 0 auto; /* Previene solapamiento con la Navbar fija */
+    padding: 32px 24px 40px 24px;
+    box-sizing: border-box;
+    transition: var(--theme-transition);
+}
+
+/* Bloques o Tarjetas contenedoras dentro de las vistas */
+.section { 
+    background: var(--surface); 
+    border: 1px solid var(--border); 
+    border-radius: var(--border-radius-lg); 
+    padding: 24px; 
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px var(--shadow-main);
+    transition: var(--theme-transition);
+}
+
+.section-title { 
+    font-family: var(--font-display, sans-serif); 
+    font-size: 15px; 
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+/* Encabezados de Página Dinámicos */
+.page-header-block {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.page-title { 
+    font-family: var(--font-display, sans-serif); 
+    font-size: 24px; 
+    font-weight: 700; 
+    margin: 0 0 4px 0; 
+    color: var(--text);
+}
+
+.page-sub { 
+    font-size: 13px; 
+    color: var(--muted); 
+    margin: 0;
+}
+
+/* Layout de Controladores y Filtros (Inventario / Logs) */
+.filters-layout {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.filters-layout .search-wrapper {
+    flex: 1;
+    min-width: 280px;
+}
+
+.filters-layout .actions-wrapper {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* =========================================================================
+   3. ELEMENTOS DE INTERFAZ (Botones, Tablas y Campos)
+   ========================================================================= */
+/* Botones Nucleares */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 18px; /* Cambiado a height + padding lateral para consistencia de cajas */
+    border-radius: var(--border-radius-md);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    transition: all 0.2s ease, var(--theme-transition);
+}
+
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary { 
+    background: var(--accent); 
+    color: #ffffff;
+}
+.btn-primary:hover { opacity: 0.9; }
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+}
+
+.btn-sm { 
+    padding: 0 12px; 
+    font-size: 12px; 
+    height: 32px; 
+    border-radius: var(--border-radius-sm);
+}
+
+.btn-success { 
+    background: rgba(67, 217, 143, 0.1); 
+    color: var(--success);
+    border-color: rgba(67, 217, 143, 0.2);
+}
+.btn-success:hover { background: rgba(67, 217, 143, 0.2); }
+
+.btn-danger { 
+    background: rgba(242, 95, 92, 0.1); 
+    color: var(--danger);
+    border-color: rgba(242, 95, 92, 0.2);
+}
+.btn-danger:hover { background: rgba(242, 95, 92, 0.2); }
+
+.btn-cancel { 
+    background: transparent; 
+    border-color: var(--border); 
+    color: var(--muted);
+}
+.btn-cancel:hover {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Tablas Normalizadas y Contenedores */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table { 
+    width: 100%;
+    border-collapse: collapse; 
+    font-size: 13px; 
+}
+
+th { 
+    text-align: left; 
+    padding: 12px; 
+    color: var(--muted); 
+    font-size: 11px; 
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    border-bottom: 1px solid var(--border); 
+}
+
+td { 
+    padding: 14px 12px; 
+    border-bottom: 1px solid var(--border);
+    color: var(--text); 
+    transition: var(--theme-transition);
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-dim); }
+td.text-right, th.text-right { text-align: right; }
+
+/* Tipografía monoespaciada para hashes, IPs o Marcas de Tiempo */
+td.text-mono {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+}
+
+/* Badges Semánticos Universales (Normalizados con tus estados de hardware) */
+.badge { 
+    display: inline-flex; 
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px; 
+    border-radius: 12px; /* Estilo píldora estético */
+    font-size: 11px;
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    border: 1px solid transparent;
+}
+
+.badge.activo, .badge.prestamo, .badge.prestado { 
+    background: rgba(79, 142, 247, 0.12);
+    color: var(--accent); 
+    border-color: rgba(79, 142, 247, 0.15);
+}
+
+.badge.devuelto, .badge.retorno, .badge.disponible { 
+    background: rgba(67, 217, 143, 0.12);
+    color: var(--success); 
+    border-color: rgba(67, 217, 143, 0.15);
+}
+
+.badge.vencido, .badge.baja { 
+    background: rgba(242, 95, 92, 0.12);
+    color: var(--danger); 
+    border-color: rgba(242, 95, 92, 0.15);
+}
+
+.badge.alta, .badge.modificacion, .badge.mantenimiento, .badge.pendiente { 
+    background: rgba(245, 166, 35, 0.12);
+    color: var(--warn); 
+    border-color: rgba(245, 166, 35, 0.15);
+}
+
+.loading { 
+    color: var(--muted); 
+    font-size: 13px; 
+    text-align: center;
+    padding: 44px; 
+}
+
+/* =========================================================================
+   4. CAPAS SUPERPUESTAS Y MODALES (Modals & Overlays)
+   ========================================================================= */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 23, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease;
+}
+
+.overlay.show { 
+    display: flex; 
+    opacity: 1;
+}
+
+.modal { 
+    background: var(--surface);
+    border: 1px solid var(--border); 
+    border-radius: var(--border-radius-xl); 
+    padding: 32px; 
+    width: 100%; 
+    max-width: 540px; /* Ajustado para soportar layouts de 2 columnas cómodamente */
+    box-sizing: border-box; 
+    box-shadow: 0 30px 60px -15px var(--shadow-main);
+    transition: var(--theme-transition);
+    animation: modalDesplazar 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal h3 { 
+    font-family: var(--font-display, sans-serif);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0; 
+    color: var(--text);
+}
+
+/* Inputs Normalizados dentro de Formularios y Modales */
+.field { 
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.field label { 
+    display: block; 
+    font-size: 11px; 
+    color: var(--muted); 
+    text-transform: uppercase; 
+    letter-spacing: .5px; 
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.field input, .field select, .field textarea { 
+    width: 100%; 
+    height: 42px; /* Normalización simétrica de altura para inputs y selects */
+    background: var(--bg); 
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-md); 
+    padding: 8px 14px; 
+    color: var(--text);
+    font-size: 13px; 
+    outline: none; 
+    box-sizing: border-box; 
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, var(--theme-transition);
+}
+
+.field textarea {
+    height: auto; /* Permite que los textareas crezcan libremente */
+}
+
+.field input:focus, .field select:focus, .field textarea:focus { 
+    border-color: var(--accent); 
+    box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.field select option { 
+    background: var(--surface); 
+    color: var(--text);
+}
+
+/* Clases auxiliares para retículas de formularios (Layouts internos) */
+.field-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.modal-actions { 
+    display: flex;
+    gap: 12px; 
+    justify-content: flex-end; 
+    margin-top: 24px; 
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+
+/* =========================================================================
+   5. ANIMACIONES Y CONTROL DE VISIBILIDAD (Ajustes finales)
+   ========================================================================= */
+@keyframes modalDesplazar {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Adaptación responsive global */
+@media (max-width: 768px) {
+    .filters-layout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filters-layout .search-wrapper, .filters-layout .actions-wrapper {
+        width: 100%;
+    }
+    .filters-layout .actions-wrapper .btn, .filters-layout .actions-wrapper select {
+        flex: 1;
+    }
+    .field-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .modal {
+        padding: 20px;
+    }
+}

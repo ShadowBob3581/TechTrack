@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTrack - Catálogo Orbital Pro</title>
+    <link rel="stylesheet" href="../css/catalogo.css">
+    
+    <style>
+        /* Pasarela fija en la esquina superior derecha para el login del personal */
+        .staff-access {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 500;
+        }
+
+        .staff-link {
+            font-size: 13px;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius-md);
+            background: var(--surface);
+            transition: all 0.2s ease;
+        }
+
+        .staff-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="staff-access">
+        <a href="login.html" class="staff-link">🔒 Acceso Personal</a>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar préstamo (ej: AI, Laptop...)" autocomplete="off">
+        <button id="searchButton">Buscar</button>
+    </div>
+
+    <header>
+        <h1>TechTrack</h1>
+        <p>Catálogo Orbital de Préstamos</p>
+    </header>
+
+
+
+    <div class="tech-orbit-container" id="container">
+        <div class="orbit-axis" id="axis"></div>
+    </div>
+
+    <div class="instructions">Haz clic en una ficha, busca o arrastra para rotar</div>
+
+    <script src="../js/carrusel3d.js"></script>
+</body>
+</html>

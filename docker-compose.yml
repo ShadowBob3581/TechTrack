@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # 1. Servicio Base de Datos PostgreSQL
+  database_service:
+    image: postgres:15-alpine
+    container_name: postgres_db_container
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      # Ssiembra automática del esquema relacional DDL al iniciar por primera vez
+      - ./database/schema_postgres.sql:/docker-entrypoint-initdb.d/schema_postgres.sql
+      # Persistencia de datos reales en volumen físico
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - trazabilidad_network
+    expose:
+      - "5432"
+
+  # 2. Servicio Backend (API Flask)
+  backend_service:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: flask_backend_container
+    restart: always
+    environment:
+      FLASK_ENV: ${FLASK_ENV}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+    depends_on:
+      - database_service
+    networks:
+      - trazabilidad_network
+    expose:
+      - "5000"
+
+  # 3. Servicio Frontend (Servidor Estático Nginx)
+  frontend_service:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nginx_frontend_container
+    restart: always
+    networks:
+      - trazabilidad_network
+    expose:
+      - "80"
+
+  # 4. Servidor de Entrada Principal (Reverse Proxy / Gateway)
+  gateway_service:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: proxy_gateway_container
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend_service
+      - frontend_service
+    networks:
+      - trazabilidad_network
+
+volumes:
+  postgres_data:
+
+networks:
+  trazabilidad_network:
+    driver: bridge

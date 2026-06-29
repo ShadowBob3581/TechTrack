@@ -1,0 +1,98 @@
+<div class="transito-wrapper animate-fade-in">
+    
+    <div class="module-header">
+        <div class="module-title-zone">
+            <h2 class="module-title">Equipos en Tránsito Activo</h2>
+            <p class="module-subtitle">Bitácora de préstamos vigentes. Filtre y procese retornos físicos de alumnos.</p>
+        </div>
+    </div>
+
+    <div class="filter-dashboard-card">
+        <div class="filter-grid">
+            <div class="search-input-wrapper">
+                <label class="filter-label">Buscar por Alumno o Matrícula</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="filtro-operador-usuario" placeholder="Ej. 202123041 o Gerardo Silva...">
+                </div>
+            </div>
+            <div class="search-input-wrapper">
+                <label class="filter-label">Filtrar por Número de Serie</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">🔢</span>
+                    <input type="text" id="filtro-operador-serie" placeholder="Ej. LAP-TESCHA-...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-table-card">
+        <div class="table-responsive">
+            <table class="premium-table">
+                <thead>
+                    <tr>
+                        <th>Identificación Activo</th>
+                        <th>Información del Solicitante</th>
+                        <th>Línea de Tiempo (Préstamo)</th>
+                        <th>Retorno Esperado</th>
+                        <th class="text-center">Acciones Operativas</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-transito-body">
+                    <tr>
+                        <td colspan="5">
+                            <div class="table-loading-state">
+                                <div class="spinner"></div>
+                                <p>Sincronizando estante físico con PostgreSQL...</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-retorno-activo">
+    <div class="modal-premium-card">
+        <div class="modal-header-block">
+            <div class="modal-header-title">
+                <span class="modal-header-icon">📥</span>
+                <h3>Procesar Retorno de Equipo</h3>
+            </div>
+            <button class="btn-close-modal" onclick="cerrarModalRetorno()">&times;</button>
+        </div>
+
+        <form id="form-procesar-devolucion">
+            <input type="hidden" id="modal-prestamo-id">
+            <input type="hidden" id="modal-activo-serie">
+
+            <div class="modal-data-summary">
+                <div class="summary-item">
+                    <span class="summary-label">NÚMERO DE SERIE / ID</span>
+                    <span class="summary-value" id="txt-modal-serie">--</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">MATRÍCULA ALUMNO</span>
+                    <span class="summary-value" id="txt-modal-matricula">--</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="campo-estado-retorno" class="form-label">
+                    Diagnóstico de Condiciones Físicas <span class="required-asterisk">*</span>
+                </label>
+                <textarea 
+                    id="campo-estado-retorno" 
+                    required 
+                    placeholder="Escriba minuciosamente las condiciones físicas de entrega (Ej. 'Regresó en excelentes condiciones' o 'Presenta rayón menor en cara posterior')."
+                ></textarea>
+            </div>
+
+            <div class="modal-actions-footer">
+                <button type="button" class="btn btn-layout-secondary" onclick="cerrarModalRetorno()">Cancelar</button>
+                <button type="submit" class="btn btn-layout-success">✓ Registrar Devolución</button>
+            </div>
+        </form>
+    </div>
+</div>

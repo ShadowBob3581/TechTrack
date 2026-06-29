@@ -1,0 +1,34 @@
+<div class="page-header-block">
+    <div>
+        <h1 class="page-title">Control de Usuarios y Roles</h1>
+        <p class="page-sub">Audita los niveles de acceso del personal de laboratorio y procesa las solicitudes de nuevos operadores.</p>
+    </div>
+</div>
+
+<h3 class="section-title title-with-icon">
+    <span class="status-icon-warn">⏳</span> Solicitudes de Acceso Pendientes
+</h3>
+
+<!-- 🎴 Reemplazo total de la primera tabla por la cuadrícula de tarjetas -->
+<div class="usuarios-cards-grid" id="grid-aprobaciones-pendientes">
+    <div class="no-cards-msg">
+        Evaluando registros en espera en la base de datos...
+    </div>
+</div>
+
+<h3 class="section-title">👥 Operadores Autorizados del Sistema</h3>
+
+<div class="section user-filters-section">
+    <div class="filters-layout">
+        <div class="search-wrapper field" style="margin-bottom: 0;">
+            <input type="text" id="buscar-operador" placeholder="Buscar operador por nombre o email..." oninput="filtrarOperadoresLocales()">
+        </div>
+    </div>
+</div>
+
+<!-- 🎴 Reemplazo total de la segunda tabla por la cuadrícula de tarjetas -->
+<div class="usuarios-cards-grid" id="grid-usuarios-activos">
+    <div class="no-cards-msg">
+        Cargando nómina digital de operadores técnicos...
+    </div>
+</div>

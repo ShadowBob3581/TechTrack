@@ -1,0 +1,58 @@
+<div class="page-header-block">
+    <div>
+        <h1 class="page-title">Caja Negra de Seguridad</h1>
+        <p class="page-sub">Historial cronológico inmutable de movimientos e incidencias del laboratorio TESCHA.</p>
+    </div>
+</div>
+
+<div class="section" style="margin-bottom: 24px; padding: 16px 24px;">
+    <div class="filters-layout">
+        
+        <div class="search-wrapper">
+            <div class="field" style="margin-bottom: 0;">
+                <input type="text" id="buscar-log" placeholder="Buscar por operador, acción o detalles..." oninput="filtrarLogsLocales()">
+            </div>
+        </div>
+
+        <div class="actions-wrapper">
+            <div class="field" style="margin-bottom: 0; min-width: 180px;">
+                <select id="filtro-accion" onchange="filtrarLogsLocales()">
+                    <option value="todos">🛠️ Todas las Acciones</option>
+                    <option value="insert">Altas / Registros</option>
+                    <option value="delete">Bajas / Eliminación</option>
+                    <option value="prestamo">Préstamos</option>
+                    <option value="devolucion">Devoluciones</option>
+                    <option value="mantenimiento">Modificaciones</option>
+                </select>
+            </div>
+
+            <button class="btn btn-secondary" onclick="cargarHistorialAuditoria()">
+                <span>🔄</span> Sincronizar Logs
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div class="section" style="padding: 0; overflow: hidden;">
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Marca de Tiempo (UTC)</th>
+                    <th>Operador / Admin</th>
+                    <th>Acción Procesada</th>
+                    <th>Detalles del Movimiento</th>
+                    <th>Dirección IP / Origen</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-logs-auditoria">
+                <tr>
+                    <td colspan="5" class="loading">
+                        🔄 Sincronizando firmas digitales de la base de datos...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

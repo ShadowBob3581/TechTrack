@@ -1,0 +1,74 @@
+<div class="section import-module">
+    <div class="import-header">
+        <h2>📥 Importación e Ingesta Masiva de Datos</h2>
+        <p class="section-subtitle">Sube archivos en formato .CSV o .JSON para sembrar activos, usuarios o registros de forma directa en la base de datos central.</p>
+    </div>
+
+    <div class="import-grid">
+        <div class="import-card drop-zone-container">
+            <div class="drop-zone" id="import-drop-zone">
+                <div class="drop-zone-icon">📂</div>
+                <h3>Arrastra y suelta tu archivo aquí</h3>
+                <p>O si lo prefieres, <span class="browse-link">examina tus carpetas</span></p>
+                <input type="file" id="import-file-input" accept=".csv, .json" style="display: none;">
+                <span class="file-format-badge">Soportados: CSV, JSON (Max 10MB)</span>
+            </div>
+            
+            <div class="file-status-block" id="file-status-block" style="display: none;">
+                <div class="file-info-meta">
+                    <span class="file-icon" id="file-icon-type">📄</span>
+                    <div>
+                        <h4 id="file-name-display">archivo_inventario.csv</h4>
+                        <p id="file-size-display">245 KB</p>
+                    </div>
+                </div>
+                <button class="btn btn-danger btn-sm" id="btn-remove-file">Quitar</button>
+            </div>
+        </div> <div class="import-card configuration-panel">
+            <h3>⚙️ Parámetros de Ingesta</h3>
+            
+            <div class="form-group">
+                <label for="import-target-table">Destino de la Información</label>
+                <select id="import-target-table" class="form-control">
+                    <option value="activos">📦 Catálogo de Activos Individuales</option>
+                    <option value="usuarios">👥 Registro de Usuarios (Operadores)</option>
+                    <option value="prestamos">📋 Historial de Préstamos y Retornos</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="import-strategy">Estrategia ante Duplicados (Conflictos)</label>
+                <select id="import-strategy" class="form-control">
+                    <option value="ignore">ON CONFLICT DO NOTHING (Ignorar existentes)</option>
+                    <option value="update">ON CONFLICT DO UPDATE (Actualizar / Forzar sobreescritura)</option>
+                </select>
+            </div>
+
+            <div class="templates-download-zone">
+                <p class="template-instruction-text">¿No sabes qué estructura usar? Descarga una plantilla modelo:</p>
+                <div class="template-btn-group">
+                    <button type="button" class="btn-template-download" id="btn-download-csv">
+                        📊 Descargar CSV Ejemplo
+                    </button>
+                    <button type="button" class="btn-template-download" id="btn-download-json">
+                        ⚙️ Descargar JSON Ejemplo
+                    </button>
+                </div>
+            </div>
+
+            <div class="progress-container" id="import-progress-container" style="display: none;">
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" id="import-progress-bar"></div>
+                </div>
+                <div class="progress-status-text">
+                    <span id="progress-percentage">0%</span>
+                    <span id="progress-details">Procesando líneas del buffer...</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="btn-execute-import" disabled>
+                ⚡ Iniciar Ingesta Masiva
+            </button>
+        </div> 
+    </div> 
+</div>

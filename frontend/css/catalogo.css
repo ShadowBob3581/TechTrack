@@ -1,0 +1,220 @@
+:root {
+    --primary: #00f2fe;
+    --secondary: #4facfe;
+    --bg-dark: #070911;
+    --card-bg: rgba(14, 20, 35, 0.95);
+    --center-y: -10vh; /* Centro matemático vertical */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #101625 0%, var(--bg-dark) 100%);
+    color: #fff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ========================================================= */
+/* BARRA DE BÚSQUEDA                                         */
+/* ========================================================= */
+.search-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    gap: 10px;
+    background: rgba(14, 20, 35, 0.8);
+    padding: 8px 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.search-container input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1rem;
+    width: 280px;
+    padding: 4px 8px;
+}
+
+.search-container input::placeholder {
+    color: #637588;
+}
+
+.search-container button {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border: none;
+    border-radius: 20px;
+    color: #070911;
+    font-weight: bold;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-container button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--primary);
+}
+
+/* ========================================================= */
+/* LETRAS DE FONDO GRANDES Y CENTRADAS                       */
+/* ========================================================= */
+header {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 0; 
+    pointer-events: none; 
+    width: 90vw; 
+}
+
+header h1 {
+    margin: 0;
+    font-size: 5rem; 
+    font-weight: 900;
+    letter-spacing: 6px; 
+    text-transform: uppercase;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 50px rgba(0, 242, 254, 0.4); 
+}
+
+header p {
+    color: #8a99ad;
+    margin: 10px 0 0 0;
+    font-size: 1.4rem; 
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+/* ========================================================= */
+/* ENTORNO 3D Y COMPONENTES                                  */
+/* ========================================================= */
+.tech-orbit-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    perspective: 2000px; 
+    perspective-origin: center calc(var(--center-y) - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orbit-axis {
+    position: absolute;
+    top: var(--center-y);
+    left: 42%; 
+    width: 1px;
+    height: 1px;
+    transform-style: preserve-3d;
+}
+
+.orbit-item {
+    position: absolute;
+    width: 230px; 
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    will-change: transform, opacity;
+}
+
+.card-joint {
+    width: 100%;
+    transform-origin: top center;
+    will-change: transform;
+}
+
+.loan-card {
+    background: var(--card-bg);
+    border: 2px solid rgba(0, 242, 254, 0.15);
+    border-radius: 16px;
+    padding: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 
+                inset 0 0 20px rgba(0, 242, 254, 0.05);
+    backdrop-filter: blur(10px);
+    user-select: none;
+    cursor: pointer;
+    transition: border 0.3s, box-shadow 0.3s, background-color 0.3s, transform 0.3s;
+}
+
+.loan-card.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 35px rgba(0, 242, 254, 0.8);
+    background: rgba(20, 30, 55, 1);
+    transform: scale(1.05);
+}
+
+.loan-card:hover:not(.selected) {
+    border-color: rgba(0, 242, 254, 0.6);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
+}
+
+.loan-card h3 {
+    margin: 0 0 8px 0;
+    color: #fff;
+    font-size: 1.15rem;
+}
+
+.amount {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 10px 0;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+}
+
+.details {
+    font-size: 0.85rem;
+    color: #b0becf;
+    line-height: 1.4;
+}
+
+.instructions {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #637588;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(10, 14, 23, 0.8);
+    padding: 8px 18px;
+    border-radius: 20px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* ========================================================= */
+/* NUEVA CUERDA OPTIMIZADA                                   */
+/* ========================================================= */
+.orbit-string {
+    width: 2px;
+    height: 150px; /* Longitud fija para que se vea simétrico */
+    background: linear-gradient(to bottom, rgba(0, 242, 254, 0.8), rgba(0, 242, 254, 0.1));
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+    margin: 0 auto; /* Centra la cuerda sobre la tarjeta */
+}

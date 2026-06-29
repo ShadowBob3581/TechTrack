@@ -1,0 +1,58 @@
+<div class="page-header-block">
+    <h1 class="page-title">Dashboard Estratégico</h1>
+    <p class="page-sub">Panel de control unificado del laboratorio.</p>
+</div>
+
+<div class="dashboard-kpi-grid">
+    <div class="section kpi-card">
+        <div class="kpi-header">
+            <span class="kpi-title">Total de Activos</span>
+            <span class="kpi-icon">📦</span>
+        </div>
+        <div class="kpi-value" id="kpi-total-activos">---</div>
+        <span class="kpi-footer text-muted">Hardware global registrado</span>
+    </div>
+
+    <div class="section kpi-card">
+        <div class="kpi-header">
+            <span class="kpi-title">En Préstamo Activo</span>
+            <span class="kpi-icon">🔄</span>
+        </div>
+        <div class="kpi-value value-accent" id="kpi-prestamos-activos">---</div>
+        <span class="kpi-footer text-muted">Dispositivos fuera del estante</span>
+    </div>
+
+    <div class="section kpi-card">
+        <div class="kpi-header">
+            <span class="kpi-title">Alertas de Fallas</span>
+            <span class="kpi-icon">⚠️</span>
+        </div>
+        <div class="kpi-value value-danger" id="kpi-alertas-fallas">---</div>
+        <span class="kpi-footer text-danger">Equipos en mantenimiento</span>
+    </div>
+
+    <div class="section kpi-card">
+        <div class="kpi-header">
+            <span class="kpi-title">Stock Libre</span>
+            <span class="kpi-icon">✅</span>
+        </div>
+        <div class="kpi-value value-success" id="kpi-stock-libre">---%</div>
+        <span class="kpi-footer text-muted">Disponibilidad inmediata</span>
+    </div>
+</div>
+
+<div class="dashboard-charts-layout">
+    <div class="section chart-section">
+        <div class="section-title">🔥 Equipos Más Solicitados por Alumnos</div>
+        <div class="chart-container">
+            <canvas id="chartEquiposSolicitados"></canvas>
+        </div>
+    </div>
+
+    <div class="section chart-section">
+        <div class="section-title">📊 Costos Mensuales de Reparación (MXN)</div>
+        <div class="chart-container">
+            <canvas id="chartCostosMantenimiento"></canvas>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+# Entornos virtuales de Python
+backend/venv/
+.venv/
+env/
+venv/
+ENV/
+
+# Archivos de configuración local con credenciales secretas
+.env
+
+# Archivos temporales de Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos del sistema operativo o editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

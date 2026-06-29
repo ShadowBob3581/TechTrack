@@ -1,0 +1,59 @@
+<div class="prestamo-form-wrapper animate-fade-in">
+    
+    <div class="module-header">
+        <h2 class="module-title">Registrar Salida de Activo</h2>
+        <p class="module-subtitle">Asignación física de dispositivos a alumnos mediante validación de estante.</p>
+    </div>
+
+    <div class="main-form-card">
+        <form id="form-nuevo-prestamo" autocomplete="off">
+            
+            <fieldset class="form-section-fieldset">
+                <legend class="form-section-legend">🤖 Selección de Activo Físico</legend>
+                
+                <div class="form-group">
+                    <label for="reg-prestamo-modelo" class="form-label">Modelo del Dispositivo <span class="required-asterisk">*</span></label>
+                    <div class="select-premium-wrapper">
+                        <select id="reg-prestamo-modelo" required>
+                            <option value="" disabled selected>Cargando catálogo de modelos...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-prestamo-serie" class="form-label">Número de Serie Disponible en Estante <span class="required-asterisk">*</span></label>
+                    <div class="select-premium-wrapper">
+                        <select id="reg-prestamo-serie" required disabled>
+                            <option value="" disabled selected>Selecciona primero un modelo...</option>
+                        </select>
+                    </div>
+                    <small id="txt-disponibilidad-status" class="form-help-text">Seleccione el modelo para mapear existencias.</small>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section-fieldset divider-top">
+                <legend class="form-section-legend">👥 Identificación del Beneficiario</legend>
+
+                <div class="form-group">
+                    <label for="reg-prestamo-matricula" class="form-label">Matrícula del Alumno <span class="required-asterisk">*</span></label>
+                    <div class="input-premium-wrapper">
+                        <input type="text" id="reg-prestamo-matricula" required placeholder="Ej. 202123041">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-prestamo-retorno" class="form-label">Fecha Absoluta de Retorno <span class="required-asterisk">*</span></label>
+                    <div class="input-premium-wrapper">
+                        <input type="date" id="reg-prestamo-retorno" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-actions-zone">
+                <button type="reset" id="btn-limpiar-formulario" class="btn btn-layout-secondary">Limpiar Campos</button>
+                <button type="submit" class="btn btn-layout-success">📥 Otorgar Préstamo</button>
+            </div>
+
+        </form>
+    </div>
+</div>

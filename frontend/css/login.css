@@ -1,0 +1,163 @@
+/* ==========================================================================
+   1. CONTROL DE CAPAS (OVERLAY 3D + GLASSMORPHISM)
+   ========================================================================== */
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 23, 0.4) !important; /* Capa translúcida espacial */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Transición fluida de desvanecimiento tridimensional */
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ESTADO ANIMADO: El cristal se proyecta hacia adelante y se desvanece */
+.login-overlay.app-revelada {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none;
+}
+
+.login-overlay.app-revelada .wrap {
+    transform: scale(1.35) rotateX(10deg);
+    filter: blur(4px);
+}
+
+/* Contenedor adaptado a Cristal Esmerilado usando variables globales */
+.wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 900px;
+    min-height: 560px;
+    border-radius: 24px;
+    overflow: hidden;
+    
+    /* EFECTO CRISTAL (Glassmorphism Adaptativo Nucleado) */
+    background: rgba(255, 255, 255, 0.02); 
+    backdrop-filter: blur(12px) saturate(180%); 
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    
+    border: 1px solid var(--border);
+    box-shadow: 0 50px 100px -20px var(--shadow-main), 
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    
+    /* Transición de escala y transformaciones tridimensionales */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s;
+    transform: scale(1) rotateX(0deg);
+}
+
+/* Optimización para que el cristal no se lave ni pierda contraste en Modo Claro */
+html[data-theme="light"] .wrap {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* ==========================================================================
+   2. ESTILOS DE PANELES (Izquierdo Corporativo y Derecho de Formulario)
+   ========================================================================== */
+.panel-left {
+    background: linear-gradient(145deg, rgba(26, 37, 64, 0.85) 0%, rgba(15, 24, 48, 0.9) 100%);
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+html[data-theme="light"] .panel-left {
+    background: linear-gradient(145deg, #1e3a8a 0%, #0f172a 100%);
+}
+
+/* Resplandor orbital interno del panel izquierdo */
+.panel-left::before {
+    content: '';
+    position: absolute;
+    width: 320px; 
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(79, 142, 247, 0.2) 0%, transparent 70%);
+    top: -80px; 
+    right: -80px;
+    pointer-events: none;
+}
+
+.brand { 
+    font-family: var(--font-display), sans-serif; 
+}
+
+/* Forzado de contraste claro en textos sobre el gradiente oscuro del panel lateral */
+html[data-theme="light"] .panel-left .brand-name,
+html[data-theme="light"] .panel-left .panel-copy h2,
+html[data-theme="light"] .panel-left .stat-n {
+    color: #ffffff;
+}
+
+.brand-name { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: #ffffff; }
+.brand-name span { color: var(--accent); }
+.brand-sub { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+.panel-copy { z-index: 1; color: #ffffff; }
+.panel-copy h2 { font-family: var(--font-display), sans-serif; font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: 12px; }
+.panel-copy p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+.stats { display: flex; gap: 24px; z-index: 1; }
+.stat-n { font-family: var(--font-display), sans-serif; font-size: 20px; font-weight: 700; color: var(--accent); }
+.stat-l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+.panel-right {
+    background: var(--surface);
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: var(--theme-transition);
+}
+
+.panel-right h3 { font-family: var(--font-display), sans-serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.panel-right .sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+/* ==========================================================================
+   3. FEEDBACK VISUAL Y COMPLEMENTOS
+   ========================================================================== */
+/* Mensajes dinámicos de respuesta del servidor */
+.msg { 
+    font-size: 13px; 
+    margin-top: 14px; 
+    text-align: center; 
+    min-height: 20px; 
+    font-weight: 500;
+}
+.msg.error { color: var(--danger); }
+.msg.ok { color: var(--success); }
+
+.hint { font-size: 11px; color: var(--muted); margin-top: 20px; text-align: center; line-height: 1.6; }
+.hint code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: var(--text); border: 1px solid var(--border); }
+
+.public-access {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+.public-access a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.public-access a:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   4. OPTIMIZACIÓN RESPONSIVA (Mobile Responsive)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .wrap { grid-template-columns: 1fr; min-height: auto; max-width: 440px; }
+    .panel-left { display: none; }
+    .panel-right { padding: 40px 24px; }
+}
