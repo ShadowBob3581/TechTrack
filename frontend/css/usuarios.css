@@ -183,7 +183,7 @@
 @media (max-width: 768px) {
     .user-filters-section .search-wrapper {
         max-width: 100%;
-    } /*[cite: 1] */
+    }
     
     .usuarios-cards-grid {
         justify-content: center; /* Centra las tarjetas en pantallas móviles */

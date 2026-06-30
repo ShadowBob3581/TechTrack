@@ -4,7 +4,7 @@
 const CONFIG = {
     radioHorizontal: 0.60,   
     radioVertical: 0.01,     
-    profundidadZ: 350,       
+    profundidadZ: 450,       
     gravedad: 0.05,          
     friccionAire: 0.94,      
     sensibilidadInercia: 2 
@@ -80,9 +80,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- AJUSTE DINÁMICO DEL RADIO: Modifica la amplitud si hay pocas tarjetas ---
     let factorExpansion = totalElements > 8 ? CONFIG.radioHorizontal : 0.40;
-    let radiusH = window.innerWidth * factorExpansion;   
-    let radiusV = window.innerHeight * CONFIG.radioVertical;  
-
+    // Reemplaza el cálculo anterior por este:
+    let radiusH = window.innerWidth < 768 ? 110 : (window.innerWidth * factorExpansion);
+    let radiusV = window.innerHeight * CONFIG.radioVertical;
     const physicsData = datosVisibles.map(() => ({
         angleZ: 0, velZ: 0, 
         angleX: 0, velX: 0
@@ -128,55 +128,66 @@ document.addEventListener("DOMContentLoaded", async () => {
     let lastVelocityForPhysics = 0;
 
     function updateOrbitPosition(rotation) {
-        let currentVel = rotation - lastRotationForPhysics;
-        let acceleration = currentVel - lastVelocityForPhysics;
+    let currentVel = rotation - lastRotationForPhysics;
+    let acceleration = currentVel - lastVelocityForPhysics;
+    
+    lastVelocityForPhysics = currentVel;
+    lastRotationForPhysics = rotation;
+
+    // Detectamos si es móvil dinámicamente para aplicar el desfase de centrado
+    const esMovil = window.innerWidth < 768;
+    const mitadTarjeta = esMovil ? 120 : 115; // 240px / 2 en móvil, 230px / 2 en PC
+
+    orbitItems.forEach((item, index) => {
+        const angleDeg = (index / totalElements) * 360 + rotation;
+        const angleRad = angleDeg * (Math.PI / 180);
         
-        lastVelocityForPhysics = currentVel;
-        lastRotationForPhysics = rotation;
+        // El cálculo base de la órbita
+        const baseX = Math.sin(angleRad) * radiusH;
+        
+        /* 🎯 CORRECCIÓN CLAVE: Restamos la mitad del ancho de la tarjeta a 'x' 
+           para que el eje real pase exactamente por el centro del elemento */
+        const x = baseX - mitadTarjeta; 
+        
+        const z = Math.cos(angleRad) * CONFIG.profundidadZ;
+        const y = Math.cos(angleRad) * radiusV; 
 
-        orbitItems.forEach((item, index) => {
-            const angleDeg = (index / totalElements) * 360 + rotation;
-            const angleRad = angleDeg * (Math.PI / 180);
-            
-            const x = Math.sin(angleRad) * radiusH;
-            const z = Math.cos(angleRad) * CONFIG.profundidadZ;
-            const y = Math.cos(angleRad) * radiusV; 
+        const zNorm = (z + CONFIG.profundidadZ) / (2 * CONFIG.profundidadZ); 
+        const scale = 0.65 + zNorm * 0.35; 
+        const opacity = 0.2 + zNorm * 0.8; 
 
-            const zNorm = (z + CONFIG.profundidadZ) / (2 * CONFIG.profundidadZ); 
-            const scale = 0.65 + zNorm * 0.35; 
-            const opacity = 0.2 + zNorm * 0.8; 
+        // Inyectamos la posición corregida
+        item.style.transform = `translate3d(${x}px, ${y}px, ${z}px) scale(${scale})`;
+        item.style.opacity = opacity;
+        item.style.zIndex = Math.round(zNorm * 100);
 
-            item.style.transform = `translate3d(${x}px, ${y}px, ${z}px) scale(${scale})`;
-            item.style.opacity = opacity;
-            item.style.zIndex = Math.round(zNorm * 100);
+        let p = physicsData[index];
+        const cardJointEl = item.querySelector('.card-joint');
 
-            let p = physicsData[index];
-            const cardJointEl = item.querySelector('.card-joint');
+        const directionFactor = Math.cos(angleRad); 
+        const radialFactor = Math.sin(angleRad);    
 
-            const directionFactor = Math.cos(angleRad); 
-            const radialFactor = Math.sin(angleRad);    
+        let forceZ = -acceleration * CONFIG.sensibilidadInercia * directionFactor; 
+        let forceX = acceleration * CONFIG.sensibilidadInercia * radialFactor;     
 
-            let forceZ = -acceleration * CONFIG.sensibilidadInercia * directionFactor; 
-            let forceX = acceleration * CONFIG.sensibilidadInercia * radialFactor;     
+        if (isAutoSpinning && Math.abs(currentVel) > 0.005) {
+            forceZ += Math.sin(Date.now() * 0.002 + index) * 0.08;
+        }
 
-            if (isAutoSpinning && Math.abs(currentVel) > 0.005) {
-                forceZ += Math.sin(Date.now() * 0.002 + index) * 0.08;
-            }
+        p.velZ += forceZ;
+        p.velX += forceX;
+        p.velZ -= p.angleZ * CONFIG.gravedad;
+        p.velX -= p.angleX * CONFIG.gravedad;
+        p.velZ *= CONFIG.friccionAire;
+        p.velX *= CONFIG.friccionAire;
+        p.angleZ += p.velZ;
+        p.angleX += p.velX;
 
-            p.velZ += forceZ;
-            p.velX += forceX;
-            p.velZ -= p.angleZ * CONFIG.gravedad;
-            p.velX -= p.angleX * CONFIG.gravedad;
-            p.velZ *= CONFIG.friccionAire;
-            p.velX *= CONFIG.friccionAire;
-            p.angleZ += p.velZ;
-            p.angleX += p.velX;
-
-            if (cardJointEl) {
-                cardJointEl.style.transform = `rotateZ(${p.angleZ * 0.2}deg) rotateX(${p.angleX * 0.3}deg)`;
-            }
-        });
-    }
+        if (cardJointEl) {
+            cardJointEl.style.transform = `rotateZ(${p.angleZ * 0.2}deg) rotateX(${p.angleX * 0.3}deg)`;
+        }
+    });
+}
 
     function centerCardByIndex(index) {
         isCentering = true;
@@ -282,7 +293,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     animate();
 
     window.addEventListener('resize', () => {
-        radiusH = window.innerWidth * factorExpansion;
+        radiusH = window.innerWidth < 768 ? 110 : (window.innerWidth * factorExpansion);
         radiusV = window.innerHeight * CONFIG.radioVertical;
     });
 });
