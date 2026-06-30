@@ -30,11 +30,11 @@ services:
     environment:
       FLASK_ENV: ${FLASK_ENV}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}          # 👈 Agregar esta
+      DB_PASSWORD: ${DB_PASSWORD}  # 👈 Agregar esta
+      DB_NAME: ${DB_NAME}          # 👈 Agregar esta
     depends_on:
       - database_service
     networks:

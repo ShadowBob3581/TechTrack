@@ -43,7 +43,12 @@ function cargarNavbarOperador() {
                         <span class="sidebar-title">TechTrack</span>
                     </div>
                 </div>
-
+                <input type="checkbox" id="menu-toggle-operador" class="menu-toggle-cb">
+                <label for="menu-toggle-operador" class="menu-hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
                 <ul class="sidebar-menu">
                     <li class="sidebar-item" id="nav-dashboard">
                         <a href="#dashboard"><span class="sidebar-icon">📊</span> Dashboard</a>

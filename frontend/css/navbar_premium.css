@@ -585,57 +585,6 @@
   transform: translateY(-50%);
 }
 
-/* Ajuste Responsivo Móvil */
-@media(max-width:650px) {
-  .theme-switch {
-    /* Un toque más pequeño en dispositivos móviles si es necesario */
-    --toggle-size: 12px; 
-  }
-}
-
-/* ========================================= */
-/* RESPONSIVE ADAPTADO */
-/* ========================================= */
-
-@media(max-width:1100px){
-    .profile-info {
-        display:none; /* Oculta textos del perfil en pantallas medianas */
-    }
-}
-
-@media(max-width:900px){
-    .sidebar-item a span {
-        display: none; /* Oculta el texto de los botones del menú, dejando solo los emojis */
-    }
-    .sidebar-item a {
-        padding: 0 12px;
-    }
-    .sidebar-title {
-        display: none; /* Deja solo la "T" del logo */
-    }
-}
-
-@media(max-width:650px) {
-    .sidebar {
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        padding: 0 16px;
-        height: 70px;
-    }
-    .sidebar-top-block {
-        gap: 16px;
-    }
-    .sidebar-footer {
-        gap: 12px;
-    }
-    .theme-switch {
-        width: 70px; /* Más compacto en móviles */
-    }
-    .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container {
-        transform: translateX(34px); 
-    }
-}
 /* =========================================================================
    PIE DE NAVBAR: Footer, Switch y Perfil (DISEÑO REDUCIDO ANTI-AMONTONAMIENTO)
    ========================================================================= */
@@ -721,4 +670,133 @@
 .btn-logout:hover {
     background: rgba(239,68,68,.1);
     border-color: #ef4444;
+}
+
+/* ==========================================================
+   SOPORTE RESPONSIVO MEJORADO (UNIVERSAL PARA ADMIN Y OPERADOR)
+   ========================================================== */
+
+/* Escondemos el mecanismo del menú responsivo en computadoras */
+.menu-toggle-cb, 
+.menu-hamburger {
+    display: none;
+}
+
+/* 💻 PANTALLAS MEDIANAS / TABLETS EN HORIZONTAL (Menos de 1100px) */
+@media (max-width: 1100px) {
+    .profile-info {
+        display: none !important; /* Oculta textos de perfil (Cargando..., Admin, Operador) */
+    }
+    .sidebar-title-block {
+        display: none; /* Deja solo el logo ('T' u 'O') para ganar espacio */
+    }
+}
+
+/* 📱 DISPOSITIVOS MÓVILES (Menos de 850px) -> El menú se vuelve vertical */
+@media (max-width: 850px) {
+    
+    /* 1. Activamos el botón hamburguesa en la barra superior */
+    .menu-hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 1010;
+        padding: 5px;
+    }
+    
+    .menu-hamburger span {
+        display: block;
+        width: 24px;
+        height: 3px;
+        background-color: var(--tt-text);
+        border-radius: 3px;
+        transition: var(--tt-transition);
+    }
+
+    /* 2. El contenedor del menú pasa de fila horizontal a caja desplegable vertical */
+    .sidebar-menu {
+        position: fixed;
+        top: 95px; /* Se posiciona justo abajo de la barra principal */
+        left: 20px;
+        right: 20px;
+        background: var(--tt-surface-solid);
+        border: 1px solid var(--tt-border);
+        border-radius: var(--tt-radius-sm);
+        padding: 16px;
+        flex-direction: column !important; /* Forzamos el comportamiento vertical */
+        gap: 8px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        
+        /* Efecto de cortina: oculto por defecto */
+        opacity: 0;
+        transform: translateY(-15px) scale(0.98);
+        pointer-events: none;
+        transition: all var(--tt-transition);
+        z-index: 999;
+    }
+
+    .sidebar-item {
+        width: 100%;
+    }
+
+    .sidebar-item a {
+        width: 100%;
+        justify-content: flex-start; /* Alineación limpia a la izquierda */
+        height: 46px;
+    }
+
+    /* 3. Activación del menú desplegable cuando el checkbox recibe el click */
+    .menu-toggle-cb:checked ~ .sidebar-menu {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+    }
+
+    /* Transformación de las líneas a una 'X' */
+    .menu-toggle-cb:checked + .menu-hamburger span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle-cb:checked + .menu-hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle-cb:checked + .menu-hamburger span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* 4. Compactación de la barra principal y los elementos del footer */
+    .sidebar {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        padding: 0 16px;
+        height: 65px;
+    }
+
+    /* Ocultamos el texto del botón salir para que sea puramente un icono responsivo */
+    .btn-logout {
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 0; /* Desaparece el string "Salir" */
+    }
+    
+    .btn-logout::before {
+        content: "🔒"; /* Mantiene el emoji visible */
+        font-size: 14px;
+    }
+}
+
+/* 📲 CELULARES CHICOS (Menos de 500px) */
+@media (max-width: 500px) {
+    .sidebar-footer {
+        gap: 8px; /* Ajuste milimétrico para que switch + avatar + logout no se desborden */
+    }
+    .theme-switch {
+        --toggle-size: 11px; /* El switch se encoge proporcionalmente */
+    }
 }

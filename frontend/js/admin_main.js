@@ -42,7 +42,12 @@ function cargarNavbarPremium() {
                         <span class="sidebar-title">TechTrack</span>
                     </div>
                 </div>
-
+                <input type="checkbox" id="menu-toggle-admin" class="menu-toggle-cb">
+                <label for="menu-toggle-admin" class="menu-hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
                 <ul class="sidebar-menu">
                     <li class="sidebar-item" id="nav-dashboard">
                         <a href="#dashboard"><span class="sidebar-icon">📊</span> Panel Estratégico</a>

@@ -218,3 +218,131 @@ header p {
     box-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
     margin: 0 auto; /* Centra la cuerda sobre la tarjeta */
 }
+/* ========================================================= */
+/* SOLUCIÓN DE DISEÑO SE CORTA / DESCENTRADO EN CELULARES    */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+    /* 1. Asegurar que el cuerpo no genere scroll horizontal */
+    body {
+        overflow-x: hidden;
+        width: 100vw;
+    }
+
+    /* 2. Centrar el botón de Acceso Personal arriba */
+    .staff-access {
+        top: 15px;
+        right: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .staff-link {
+        font-size: 11px;
+        padding: 5px 12px;
+        white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
+    }
+
+    /* 3. Reducir, centrar y contener la Barra de Búsqueda */
+    .search-container {
+        top: 55px;
+        left: 50%;
+        transform: translateX(-50%); /* Forzar centrado matemático exacto */
+        width: 90%; /* Deja un 5% de margen a cada lado */
+        max-width: 340px; /* Tamaño límite para pantallas chicas */
+        box-sizing: border-box;
+        padding: 6px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .search-container input {
+        width: 70%; /* Le da espacio suficiente al botón de buscar */
+        font-size: 0.85rem;
+        padding: 4px;
+    }
+
+    .search-container button {
+        width: 28%;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+
+    /* 4. Centrar y encoger los títulos de fondo (TECHTRACK) */
+    header {
+        width: 95vw; /* Casi todo el ancho disponible */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    header h1 {
+        font-size: 2.2rem !important; /* Más chico para que no se desborde */
+        letter-spacing: 2px;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    header p {
+        font-size: 0.8rem !important;
+        letter-spacing: 1px;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* 5. Adecuar las tarjetas del carrusel 3D para celulares */
+    .tech-orbit-container {
+        perspective: 1000px; /* Acerca la visualización */
+    }
+
+    .orbit-item {
+        width: 150px; /* Reducción de escala para que entren en el viewport */
+    }
+
+    .loan-card {
+        padding: 12px;
+    }
+
+    .loan-card h3 {
+        font-size: 0.85rem;
+    }
+
+    .amount {
+        font-size: 1.1rem;
+        margin: 5px 0;
+    }
+
+    .details {
+        font-size: 0.68rem;
+    }
+
+    .orbit-string {
+        height: 80px; /* Compactación vertical */
+    }
+
+    /* Mensaje "No hay dispositivos disponibles" de error/aviso */
+    #axis div {
+        font-size: 0.9rem !important;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* 📲 REAJUSTE DE SEGURIDAD PARA PANTALLAS EXTRACTAMENTE PEQUEÑAS (Menos de 380px) */
+@media (max-width: 380px) {
+    header h1 {
+        font-size: 1.8rem !important;
+    }
+    .search-container {
+        max-width: 280px;
+    }
+    .orbit-item {
+        width: 130px;
+    }
+}
