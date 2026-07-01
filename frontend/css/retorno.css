@@ -1,0 +1,42 @@
+/* =========================================================================
+   FIX OPERATIVO: POSICIONAMIENTO GLOBAL Y CENTRADO DEL MODAL DE RETORNO
+   ========================================================================= */
+
+/* 1. Forzar a que el overlay cubra absolutamente toda la pantalla */
+#modal-retorno-activo.modal-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.6) !important; /* Fondo oscuro semi-transparente */
+    display: none; /* Tu JS lo cambiará a 'flex' dinámicamente */
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 9999 !important; /* Asegurar que flote por encima de cualquier tabla o header */
+}
+
+/* 2. Asegurar que la tarjeta del modal tenga un tamaño adecuado y no se rompa */
+#modal-retorno-activo .modal-premium-card {
+    background-color: #151b26; /* Color oscuro alineado a tu paleta premium */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 550px; /* Ancho ideal para tarjetas de diagnóstico */
+    padding: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    animation: modalShowUp 0.25s ease-out;
+}
+
+/* 3. Animación sutil de entrada para que no aparezca de golpe */
+@keyframes modalShowUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
