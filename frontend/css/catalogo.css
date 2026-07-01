@@ -28,7 +28,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
+  
 /* ========================================================= */
 /* ACCESO PERSONAL (PASADO DEL HTML A AQUÍ)                  */
 /* ========================================================= */
@@ -159,7 +159,7 @@ header p {
 .orbit-axis {
     position: absolute;
     top:  -10vh;
-    left: 41%; 
+    left: 50%; 
     width: 1px;
     height: 1px;
     transform-style: preserve-3d;

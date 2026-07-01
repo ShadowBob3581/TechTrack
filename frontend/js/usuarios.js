@@ -87,7 +87,7 @@ function renderizarPendientes(usuarios) {
 }
 
 /**
- * Renderiza el personal activo en fichas modulares dinámicas
+ * Renderiza el personal activo en fichas modulares dinámicas (Incluye botón de Rol Alternante)
  */
 function renderizarActivos(usuarios) {
     const contenedor = document.getElementById('grid-usuarios-activos');
@@ -106,6 +106,19 @@ function renderizarActivos(usuarios) {
         const esAdmin = u.rol.toLowerCase() === 'admin' || u.rol.toLowerCase() === 'administrador';
         const claseBorde = esAdmin ? 'admin-border' : '';
 
+        // Definición dinámica del botón según el rol actual del operador
+        const botonRol = esAdmin 
+            ? `<button class="btn btn-secondary" 
+                       style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; background: #ea580c; color: #fff; border: none;" 
+                       onclick="cambiarRolUsuario(${u.id}, 'operador')">
+                   📉 Quitar Administrador
+               </button>`
+            : `<button class="btn btn-secondary" 
+                       style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; background: #16a34a; color: #fff; border: none;" 
+                       onclick="cambiarRolUsuario(${u.id}, 'admin')">
+                   📈 Hacer Administrador
+               </button>`;
+
         return `
             <div class="card-usuario ${claseBorde}">
                 <div class="card-border-top"></div>
@@ -118,6 +131,7 @@ function renderizarActivos(usuarios) {
                 </div>
                 
                 <div class="card-actions" style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                    ${botonRol}
                     <button class="btn btn-secondary" 
                             style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--bg); border: 1px solid var(--border);" 
                             onclick="restablecerContrasenaUsuario(${u.id}, '${u.nombre}')">
@@ -211,6 +225,87 @@ async function dictaminarUsuario(id, accion) {
         Swal.fire({
             title: 'Error de Red',
             text: 'Fallo crítico de conexión con el backend de Flask.',
+            icon: 'error',
+            confirmButtonColor: '#ef4444',
+            background: '#111827',
+            color: '#f3f4f6'
+        });
+    }
+}
+
+/**
+ * 🛠️ NUEVA FUNCIÓN: Envía la petición a Flask para cambiar el privilegio/rol de un usuario activo
+ */
+async function cambiarRolUsuario(id, nuevoRol) {
+    const baseAPI = window.API || '/api';
+    const token = localStorage.getItem('token');
+    
+    const esAdmin = nuevoRol === 'admin';
+    const titulo = esAdmin ? '¿Asignar rol de Administrador?' : '¿Remover rol de Administrador?';
+    const texto = esAdmin 
+        ? 'El usuario tendrá permisos totales para auditar personal y configuraciones globales.' 
+        : 'El usuario perderá el acceso a este panel y volverá a ser operador técnico estándar.';
+
+    const resultado = await Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: esAdmin ? '#16a34a' : '#ea580c',
+        cancelButtonColor: '#4b5563',
+        confirmButtonText: esAdmin ? 'Sí, Promover' : 'Sí, Degradar',
+        cancelButtonText: 'Cancelar',
+        background: '#111827',
+        color: '#f3f4f6'
+    });
+
+    if (!resultado.isConfirmed) return;
+
+    try {
+        Swal.fire({
+            title: 'Actualizando privilegios...',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); },
+            background: '#111827',
+            color: '#f3f4f6'
+        });
+
+        // Petición dirigida a un endpoint REST estándar para actualización de rol
+        const respuesta = await fetch(`${baseAPI}/auth/usuarios/cambiar-rol/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ rol: nuevoRol })
+        });
+
+        if (respuesta.ok) {
+            await cargarBandejaUsuarios();
+            
+            Swal.fire({
+                title: '¡Permisos Actualizados!',
+                text: 'Los cambios de rol se han aplicado y guardado con éxito.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6',
+                background: '#111827',
+                color: '#f3f4f6'
+            });
+        } else {
+            Swal.fire({
+                title: 'Cambio Denegado',
+                text: 'El backend de Flask rechazó la alteración de rango para este ID.',
+                icon: 'error',
+                confirmButtonColor: '#ef4444',
+                background: '#111827',
+                color: '#f3f4f6'
+            });
+        }
+    } catch (error) {
+        console.error("Error al cambiar rol:", error);
+        Swal.fire({
+            title: 'Fallo de Red',
+            text: 'Imposible comunicar los nuevos privilegios a la base de datos.',
             icon: 'error',
             confirmButtonColor: '#ef4444',
             background: '#111827',
@@ -403,9 +498,10 @@ function notificarErrorTablas() {
     if(document.getElementById('grid-usuarios-activos')) document.getElementById('grid-usuarios-activos').innerHTML = msg;
 }
 
-// Publicación global en Window
+// Publicación global en Window (Añadido cambiarRolUsuario)
 window.inicializarModuloUsuarios = inicializarModuloUsuarios;
 window.dictaminarUsuario = dictaminarUsuario;
 window.revocarAccesoUsuario = revocarAccesoUsuario;
 window.restablecerContrasenaUsuario = restablecerContrasenaUsuario;
 window.filtrarOperadoresLocales = filtrarOperadoresLocales;
+window.cambiarRolUsuario = cambiarRolUsuario;

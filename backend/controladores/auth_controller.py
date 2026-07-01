@@ -268,6 +268,69 @@ def revocar_usuario(id):
         db.close()
 
 
+@auth_bp.route('/usuarios/cambiar-rol/<int:id>', methods=['POST', 'OPTIONS'])
+def cambiar_rol_usuario(id):
+    """Modifica el rol de un usuario activo ('administrador'/'operador') y añade registro detallado a auditoría"""
+    if request.method == 'OPTIONS':
+        return jsonify({"success": True}), 200
+
+    ip_origen = request.remote_addr  # 🌐 Rastrear IP de origen
+    lugar = 'Oficina de Administración'  # 📍 Ubicación administrativa
+
+    datos = request.get_json(silent=True)
+    if not datos or 'rol' not in datos:
+        return jsonify({"success": False, "message": "Faltan parámetros requeridos (rol)."}), 400
+
+    rol_solicitado = datos.get('rol').strip().lower()
+
+    # Mapeo estricto para encajar con el ENUM rol_usuario de PostgreSQL ('administrador' u 'operador')
+    if rol_solicitado in ['admin', 'administrador']:
+        nuevo_rol_enum = 'administrador'
+    elif rol_solicitado in ['operador', 'user']:
+        nuevo_rol_enum = 'operador'
+    else:
+        return jsonify({"success": False, "message": "El rol especificado no es un tipo válido para el sistema."}), 400
+
+    db = Conexion.conectar()
+    cursor = db.cursor()
+    try:
+        # 1. Validar existencia del usuario y guardar su estado actual para auditoría
+        cursor.execute("SELECT nombre, usuario, rol FROM usuarios WHERE id = %s;", (id,))
+        usuario_afectado = cursor.fetchone()
+        
+        if not usuario_afectado:
+            return jsonify({"success": False, "message": "El usuario seleccionado no existe."}), 404
+
+        nombre_usr, correo_usr, rol_anterior = usuario_afectado[0], usuario_afectado[1], str(usuario_afectado[2])
+
+        # Evitar procesamiento y escrituras innecesarias en el log si el rol es el mismo
+        if rol_anterior == nuevo_rol_enum:
+            return jsonify({"success": True, "message": "El usuario ya cuenta con el rol especificado actualmente."}), 200
+
+        # 2. Ejecutar la actualización en la tabla usuarios
+        cursor.execute("UPDATE usuarios SET rol = %s WHERE id = %s;", (nuevo_rol_enum, id))
+
+        # 3. 📝 REGISTRO EN AUDITORÍA DEL CONTROL DE ACCESO BASADO EN ROLES (RBAC)
+        cursor.execute("""
+            INSERT INTO auditoria_movimientos (usuario_id, accion, detalles, ubicacion, ip_origen, fecha_registro)
+            VALUES (%s, 'CONTROL_RBAC', %s, %s, %s, CURRENT_TIMESTAMP);
+        """, (id, f"Se modificaron los privilegios de {nombre_usr} ({correo_usr}). Rango actualizado de '{rol_anterior}' a '{nuevo_rol_enum}'.", lugar, ip_origen))
+
+        db.commit()
+        return jsonify({
+            "success": True, 
+            "message": f"El rol de {nombre_usr} ha sido cambiado exitosamente a '{nuevo_rol_enum}'."
+        }), 200
+
+    except Exception as e:
+        print(f"❌ [ERROR CRÍTICO AL CAMBIAR ROL]: {str(e)}")
+        db.rollback()
+        return jsonify({"success": False, "message": "Error interno del servidor al procesar el cambio de rol.", "detalle": str(e)}), 500
+    finally:
+        cursor.close()
+        db.close()
+
+
 @auth_bp.route('/registro', methods=['POST', 'OPTIONS'])
 def registro():
     """Registra un nuevo operador en la base de datos con aprobado = FALSE"""
