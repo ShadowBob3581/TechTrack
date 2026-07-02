@@ -26,7 +26,7 @@ Sistema Integral de Gestión de Inventario de Activos con trazabilidad completa,
 
 ## 📁 Estructura del Proyecto
 
-```
+```text
 proyecto/
 │
 ├── backend/                          # 🔧 Aplicación Flask (API REST)
