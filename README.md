@@ -53,7 +53,6 @@ proyecto/
 │
 ├── frontend/                         # 💻 Interfaz web (HTML/CSS/JS)
 │   ├── Dockerfile                    # Imagen Nginx servir estáticos
-│   ├── estructura.txt                # Mapa de estructura del frontend
 │   │
 │   ├── vistas/                       # Plantillas HTML (fragmentos SPA)
 │   │   ├── index.html                # 🌐 Catálogo público (sin login)
