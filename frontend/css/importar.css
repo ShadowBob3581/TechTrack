@@ -1,206 +1,238 @@
 /* =========================================================================
-   MÓDULO DE IMPORTACIÓN MASIVA - CSS PREMIUM
+   1. VARIABLES DE ENTORNO Y SOPORTE DE TEMAS (Oscuro por defecto / Claro dinámico)
+   ========================================================================= */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --danger-color: #dc2626;
+    --danger-hover: #b91c1c;
+    --radius: 12px;
+    
+    /* Paleta Modo Oscuro */
+    --bg-card: #1e293b;
+    --bg-input: #0f172a;
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --dropzone-border: #475569;
+    --dropzone-bg: rgba(15, 23, 42, 0.4);
+    --btn-disabled-bg: #334155;
+    --btn-disabled-text: #64748b;
+}
+
+/* Variación automática al activar el Modo Claro mediante el switch */
+[data-theme="light"] {
+    --bg-card: #ffffff;
+    --bg-input: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --dropzone-border: #cbd5e1;
+    --dropzone-bg: rgba(241, 245, 249, 0.5);
+    --btn-disabled-bg: #e2e8f0;
+    --btn-disabled-text: #94a3b8;
+}
+
+/* =========================================================================
+   2. CONTENEDOR PRINCIPAL Y CABECERA
    ========================================================================= */
 .import-module {
-    animation: fadeIn 0.4s ease-out;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-main);
+    transition: color 0.3s ease;
 }
 
 .import-header {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
+.import-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: var(--text-main);
+    transition: color 0.3s ease;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+/* =========================================================================
+   3. GRID DE DISTRIBUCIÓN (Dos Columnas Equitativas)
+   ========================================================================= */
 .import-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     gap: 24px;
     align-items: start;
 }
 
-@media (max-width: 900px) {
-    .import-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
+/* Tarjetas Base */
 .import-card {
-    background: var(--bg-card, #1e293b);
-    border: 1px solid var(--border-color, #334155);
-    border-radius: 12px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
     padding: 24px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Área Drag and Drop */
+.import-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+}
+
+/* =========================================================================
+   4. PANEL IZQUIERDO: Zona de Arrastre y Archivo (drop-zone-container)
+   ========================================================================= */
 .drop-zone {
-    border: 2px dashed var(--primary, #00ff88);
-    background: rgba(0, 255, 136, 0.02);
-    border-radius: 8px;
+    border: 2px dashed var(--dropzone-border);
+    border-radius: var(--radius);
     padding: 40px 20px;
     text-align: center;
+    background-color: var(--dropzone-bg);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.drop-zone:hover, .drop-zone.drag-over {
-    background: rgba(0, 255, 136, 0.08);
-    box-shadow: 0 0 15px rgba(0,255,136,0.2);
+.drop-zone:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(37, 99, 235, 0.05);
 }
 
 .drop-zone-icon {
     font-size: 3rem;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.drop-zone h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0 0 6px 0;
+}
+
+.drop-zone p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 16px 0;
+    transition: color 0.3s ease;
 }
 
 .browse-link {
-    color: var(--primary, #00ff88);
+    color: var(--primary-color);
+    font-weight: 600;
     text-decoration: underline;
-    font-weight: bold;
 }
 
 .file-format-badge {
-    display: block;
-    margin-top: 16px;
+    display: inline-block;
     font-size: 0.75rem;
-    color: var(--secondary, #8a99ad);
+    background-color: var(--bg-input);
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-/* Bloque de Estado de Archivo */
+/* Bloque de Estado del Archivo Seleccionado */
 .file-status-block {
+    margin-top: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: rgba(255,255,255,0.05);
-    border-radius: 6px;
-    padding: 12px 16px;
-    margin-top: 16px;
-    border-left: 4px solid var(--primary, #00ff88);
+    justify-content: space-between;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .file-info-meta {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .file-icon {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
-/* Barra de Progreso Cyberpunk */
-.progress-container {
-    margin: 20px 0;
+.file-info-meta h4 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+    word-break: break-all;
 }
 
-.progress-bar-wrapper {
-    background: #0f172a;
-    border-radius: 50px;
-    height: 10px;
-    overflow: hidden;
-    border: 1px solid #334155;
-}
-
-.progress-bar-fill {
-    background: linear-gradient(90deg, #00ff88, #00bcff);
-    width: 0%;
-    height: 100%;
-    border-radius: 50px;
-    transition: width 0.2s ease-in-out;
-    box-shadow: 0 0 10px rgba(0,255,136,0.5);
-}
-
-.progress-status-text {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    margin-top: 6px;
-    color: var(--secondary, #8a99ad);
-}
-
-.btn-block {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-block:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+.file-info-meta p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    transition: color 0.3s ease;
 }
 
 /* =========================================================================
-   ESTILOS DE FORMULARIOS Y SELECTS (CORRECCIÓN DE MAQUETACIÓN)
+   5. PANEL DERECHO: Parámetros de Ingesta (configuration-panel)
    ========================================================================= */
-
-/* Contenedor de cada opción */
 .form-group {
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column; /* Hace que el label quede ARRIBA y el input ABAJO */
-    align-items: flex-start;
-    width: 100%;
-    clear: both; /* Rompe cualquier float residual */
 }
 
-/* Estilo para las etiquetas (Labels) */
 .form-group label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--secondary, #8a99ad);
-    margin-bottom: 8px;
     display: block;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
 }
 
-/* El elemento Select e Inputs estilizados */
 .form-control {
     width: 100%;
-    padding: 12px 16px;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-main);
+    padding: 10px 14px;
     font-size: 0.95rem;
-    color: #ffffff;
-    background-color: #0f172a; /* Fondo oscuro integrado */
-    border: 1px solid var(--border-color, #334155);
-    border-radius: 8px;
     outline: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    appearance: none; /* Quita el estilo genérico del sistema operativo */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    
-    /* Agregamos una flecha minimalista personalizada en CSS */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238a99ad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 16px;
-    padding-right: 40px; /* Espacio para que el texto no pise la flecha */
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Efecto Focus al hacer click */
 .form-control:focus {
-    border-color: var(--primary, #00ff88);
-    box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
+    border-color: var(--primary-color);
 }
 
-/* Estilo interno para las opciones desplegadas (Opcional, ayuda a la legibilidad) */
-.form-control option {
-    background-color: #1e293b;
-    color: #ffffff;
-    padding: 12px;
+/* Desplegables específicos de formulario */
+select.form-control option {
+    background-color: var(--bg-card);
+    color: var(--text-main);
 }
 
+/* Sección de Descarga de Plantillas */
 .templates-download-zone {
-    margin: 20px 0;
-    padding: 14px;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(51, 65, 85, 0.5);
-    border-radius: 8px;
+    margin: 24px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
 }
 
 .template-instruction-text {
-    font-size: 0.8rem;
-    color: var(--secondary, #8a99ad);
-    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0 0 12px 0;
+    transition: color 0.3s ease;
 }
 
 .template-btn-group {
@@ -210,23 +242,118 @@
 
 .btn-template-download {
     flex: 1;
-    background: #1e293b;
-    border: 1px solid #475569;
-    color: #e2e8f0;
-    padding: 10px 12px;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-main);
+    padding: 10px;
     font-size: 0.85rem;
     font-weight: 500;
-    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.3s ease;
 }
 
 .btn-template-download:hover {
-    background: #334155;
-    border-color: var(--primary, #00ff88);
+    background-color: var(--border-color);
+}
+
+/* Barra de Progreso */
+.progress-container {
+    margin-bottom: 20px;
+}
+
+.progress-bar-wrapper {
+    width: 100%;
+    background-color: var(--bg-input);
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%; 
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+.progress-status-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+}
+
+#progress-percentage {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+#progress-details {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+/* =========================================================================
+   6. BOTONES GENÉRICOS 
+   ========================================================================= */
+.btn {
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botón Iniciar Ingesta (btn-primary btn-block) */
+.btn-primary {
+    background-color: var(--primary-color);
     color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+}
+
+.btn-block {
+    width: 100%;
+    padding: 14px;
+}
+
+/* Estado Deshabilitado del Botón Principal */
+.btn-primary:disabled {
+    background-color: var(--btn-disabled-bg);
+    color: var(--btn-disabled-text);
+    cursor: not-allowed;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botón Quitar Archivo (btn-danger btn-sm) */
+.btn-danger {
+    background-color: var(--danger-color);
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+}
+
+/* =========================================================================
+   7. RESPONSIVE DESIGN
+   ========================================================================= */
+@media (max-width: 992px) {
+    .import-grid {
+        grid-template-columns: 1fr;
+    }
 }
