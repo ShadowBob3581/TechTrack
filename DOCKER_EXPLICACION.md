@@ -253,5 +253,3 @@ docker compose ps
 - Los Dockerfiles crean las imágenes del backend, frontend y gateway.
 - nginx.conf define cómo se enrutan las peticiones entre frontend y backend.
 - PostgreSQL se mantiene persistente mediante un volumen dedicado.
-
-Si necesitas, también puedo generar una versión más técnica del mismo archivo, con un enfoque orientado a desarrolladores o a despliegue en producción.
