@@ -15,14 +15,14 @@ El sistema opera bajo una arquitectura desacoplada donde el Frontend (JS Vanilla
 │  Usuario ingresa credenciales       │
 │  (login.html + auth.js)             │
 └────────────────┬────────────────────┘
-              │
-              ▼
+               │
+               ▼
 ┌────────────────────────────┐
 │ POST /api/auth/login       │
 │ Payload: {usuario, pass}   │
 └────────────┬───────────────┘
-           │
-           ▼
+            │
+            ▼
 ┌────────────────────────────────────┐
 │ auth_controller.py:login()         │
 │ 1. Valida credenciales              │
@@ -30,19 +30,19 @@ El sistema opera bajo una arquitectura desacoplada donde el Frontend (JS Vanilla
 │ 3. Valida aprobación del admin      │
 │ 4. Registra en auditoría (IP+user)  │
 └────────────┬───────────────────────┘
-           │
-           ▼
+            │
+            ▼
 ┌────────────────────────────────────┐
 │ PostgreSQL Insert Audit             │
 │ tabla: auditoria_movimientos        │
 └────────────┬───────────────────────┘
-           │
-           ▼
+            │
+            ▼
 ┌────────────────────────────────────┐
 │ Respuesta JSON con Token JWT       │
 └────────────┬───────────────────────┘
-           │
-           ▼
+            │
+            ▼
 ┌────────────────────────────────────┐
 │ auth.js almacena en sessionStorage  │
 └────────────────────────────────────┘

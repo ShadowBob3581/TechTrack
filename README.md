@@ -2,24 +2,24 @@
 
 ## 🎯 Descripción General
 
-Sistema Integral de Gestión de Inventario de Activos con trazabilidad completa, auditoría de movimientos y control de préstamos[cite: 1]. Diseñado para mantener un control riguroso sobre el inventario de equipos, dispositivos y activos en laboratorios o centros de recursos[cite: 1].
+Sistema Integral de Gestión de Inventario de Activos con trazabilidad completa, auditoría de movimientos y control de préstamos. Diseñado para mantener un control riguroso sobre el inventario de equipos, dispositivos y activos en laboratorios o centros de recursos.
 
 ### Características Principales
-- **Control de Inventario**: Gestión CRUD de activos con estados dinámicos[cite: 1].
-- **Sistema de Préstamos**: Registro y control de préstamos de activos con devoluciones[cite: 1].
-- **Auditoría en Tiempo Real**: Seguimiento de movimientos con registro de usuario, IP y ubicación[cite: 1].
-- **Dashboard Analítico**: KPIs y métricas de disponibilidad y utilización de activos[cite: 1].
-- **Multi-rol e Importación Masiva**: Roles diferenciados (Admin/Operadores) y carga batch mediante CSV/JSON[cite: 1].
-- **Catálogo Público**: Visualización del inventario disponible sin requerir autenticación[cite: 1].
+- **Control de Inventario**: Gestión CRUD de activos con estados dinámicos.
+- **Sistema de Préstamos**: Registro y control de préstamos de activos con devoluciones.
+- **Auditoría en Tiempo Real**: Seguimiento de movimientos con registro de usuario, IP y ubicación.
+- **Dashboard Analítico**: KPIs y métricas de disponibilidad y utilización de activos.
+- **Multi-rol e Importación Masiva**: Roles diferenciados (Admin/Operadores) y carga batch mediante CSV/JSON.
+- **Catálogo Público**: Visualización del inventario disponible sin requerir autenticación.
 
 ---
 
 ## 🏗️ Stack Tecnológico
 
-- **Backend:** Python con **Flask 3.0.2** (API REST), **Gunicorn** (Servidor WSGI) y **psycopg2-binary**[cite: 1].
-- **Base de Datos:** **PostgreSQL 15** con triggers automáticos de auditoría[cite: 1].
-- **Frontend:** HTML5, CSS3 (diseño responsive) y **JavaScript Vanilla** (Estructura SPA sin frameworks externos)[cite: 1].
-- **Infraestructura:** **Docker Compose** para la orquestación multi-servicio y **Nginx** como Reverse Proxy/Gateway[cite: 1].
+- **Backend:** Python con **Flask 3.0.2** (API REST), **Gunicorn** (Servidor WSGI) y **psycopg2-binary**.
+- **Base de Datos:** **PostgreSQL 15** con triggers automáticos de auditoría.
+- **Frontend:** HTML5, CSS3 (diseño responsive) y **JavaScript Vanilla** (Estructura SPA sin frameworks externos).
+- **Infraestructura:** **Docker Compose** para la orquestación multi-servicio y **Nginx** como Reverse Proxy/Gateway.
 
 ---
 
@@ -129,12 +129,9 @@ proyecto/
 
 1. **Autenticación:** El cliente envía credenciales mediante `POST /api/auth/login`. El backend valida contra la BD, registra el evento en auditoría y responde con un token que se almacena en `sessionStorage`.
 
-
 2. **Préstamos (Transacción Atómica):** Cuando un operador registra una salida, el sistema ejecuta una transacción SQL (`BEGIN...COMMIT`) que inserta el préstamo, actualiza el estado del activo a `en_prestamo` y genera el log de auditoría automáticamente.
 
-
 3. **Auditoría Inteligente:** Cualquier cambio de estado, login o alteración del inventario guarda de forma obligatoria e inmutable la IP origen (`request.remote_addr`), usuario y detalles del cambio.
-
 
 
 ---
@@ -145,9 +142,7 @@ Asegúrate de tener instalado en tu sistema local:
 
 * **Docker Engine** (v20.10+) y **Docker Compose** (v2.x+).
 
-
 * **Git** (para control de versiones).
-
 
 
 ---
@@ -199,9 +194,7 @@ Una vez que los contenedores estén corriendo, abre tu navegador web e ingresa a
 
 * **Catálogo Público / Aplicación:** `http://localhost` (Puerto 80 gestionado por el Gateway).
 
-
 * **Backend API (Health Check):** `http://localhost:5000/api/health`.
-
 
 
 ### 🔐 Credenciales de Prueba
@@ -241,7 +234,6 @@ docker-compose exec database_service psql -U appuser -d trazabilidad_assets
 ---
 
 **Última actualización**: 2026-07-01 | **Versión**: 1.0
-
 
 ---
 ## 📚 Documentación Avanzada
