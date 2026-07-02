@@ -1,4 +1,3 @@
-```markdown
 # 📦 Sistema de Gestión y Trazabilidad de Activos
 
 ## 🎯 Descripción General
@@ -244,10 +243,7 @@ docker-compose exec database_service psql -U appuser -d trazabilidad_assets
 **Última actualización**: 2026-07-01 | **Versión**: 1.0
 
 
-```markdown
 ---
 ## 📚 Documentación Avanzada
 - Para consultar el diseño detallado de la Base de Datos, ingresa a [DATABASE.md](./DATABASE.md).
 - Para guías de desarrollo local, flujos internos y solución de problemas, ingresa a [DEVELOPMENT.md](./DEVELOPMENT.md).
-
-```
