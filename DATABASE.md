@@ -1,4 +1,3 @@
-```markdown
 # 🗄️ Documentación del Modelo de Datos (DATABASE.md)
 
 Este archivo contiene la especificación completa, el diseño del esquema y los comandos de mantenimiento para la base de datos de la aplicación.
@@ -104,7 +103,5 @@ docker-compose exec database_service pg_dump -U appuser trazabilidad_assets > ba
 
 # Restaurar un respaldo previo hacia el contenedor
 docker-compose exec -T database_service psql -U appuser trazabilidad_assets < backup.sql
-
-```
 
 ```

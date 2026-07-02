@@ -1,4 +1,3 @@
-```markdown
 # 🛠️ Guía de Desarrollo e Integración (DEVELOPMENT.md)
 
 Este documento detalla la arquitectura de los flujos de datos del sistema, pasos para entorno local sin Docker, testing de endpoints y resolución de problemas recurrentes.
@@ -10,8 +9,6 @@ Este documento detalla la arquitectura de los flujos de datos del sistema, pasos
 El sistema opera bajo una arquitectura desacoplada donde el Frontend (JS Vanilla SPA) se comunica mediante JSON con la API REST en Flask.
 
 ### 1️⃣ Flujo de Autenticación (Login)
-
-```
 
 ┌─────────────────────────────────────┐
 │  Usuario ingresa credenciales       │
@@ -49,7 +46,6 @@ El sistema opera bajo una arquitectura desacoplada donde el Frontend (JS Vanilla
 │ auth.js almacena en sessionStorage  │
 └────────────────────────────────────┘
 
-```
 
 ### 2️⃣ Flujo CRUD de Activos (Inventario)
 - **GET LISTA**: `GET /api/activos?categoria=Laptops` -> `activos_controller.py:listar()` -> Responde un arreglo JSON con el inventario actual.
