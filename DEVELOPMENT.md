@@ -10,6 +10,7 @@ El sistema opera bajo una arquitectura desacoplada donde el Frontend (JS Vanilla
 
 ### 1️⃣ Flujo de Autenticación (Login)
 
+```text
 ┌─────────────────────────────────────┐
 │  Usuario ingresa credenciales       │
 │  (login.html + auth.js)             │
@@ -45,7 +46,7 @@ El sistema opera bajo una arquitectura desacoplada donde el Frontend (JS Vanilla
 ┌────────────────────────────────────┐
 │ auth.js almacena en sessionStorage  │
 └────────────────────────────────────┘
-
+```
 
 ### 2️⃣ Flujo CRUD de Activos (Inventario)
 - **GET LISTA**: `GET /api/activos?categoria=Laptops` -> `activos_controller.py:listar()` -> Responde un arreglo JSON con el inventario actual.
